@@ -111,4 +111,4 @@ modern-kikubo/
 ## Team
 
 - **Rebecca Nyandeng** — Development
-- **Partner** — Business
+- **Nambuusi Emily** — Business
