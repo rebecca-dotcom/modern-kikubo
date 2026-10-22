@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../server/node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  VENDOR
+  BUYER
+  BODA
+}
+
+enum Category {
+  WOMEN
+  MEN
+  CHILDREN
+  SPORTS
+}
+
+enum Condition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  PREPARING
+  PICKED_UP
+  DELIVERED
+  CANCELLED
+}
+
+enum SubStatus {
+  ACTIVE
+  EXPIRED
+  PENDING
+}
+
+enum PayMethod {
+  MTN
+  AIRTEL
+  CASH
+}
+
+enum PayStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String   @unique
+  password  String
+  role      Role     @default(BUYER)
+  createdAt DateTime @default(now())
+
+  vendor Vendor?
+  boda   Boda?
+  orders Order[]
+}
+
+model Vendor {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  shopName    String
+  location    String
+  description String?
+  isActive    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  user          User           @relation(fields: [userId], references: [id])
+  products      Product[]
+  orders        Order[]
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id        String    @id @default(cuid())
+  vendorId  String
+  paidAt    DateTime  @default(now())
+  expiresAt DateTime
+  amount    Int       @default(15000)
+  status    SubStatus @default(ACTIVE)
+
+  vendor Vendor @relation(fields: [vendorId], references: [id])
+}
+
+model Product {
+  id          String    @id @default(cuid())
+  vendorId    String
+  title       String
+  description String?
+  price       Int
+  category    Category
+  size        String?
+  condition   Condition
+  photos      String[]
+  isAvailable Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+
+  vendor     Vendor      @relation(fields: [vendorId], references: [id])
+  orderItems OrderItem[]
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  buyerId         String
+  vendorId        String
+  bodaId          String?
+  status          OrderStatus @default(PENDING)
+  totalAmount     Int
+  deliveryFee     Int         @default(5000)
+  deliveryAddress String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  buyer   User      @relation(fields: [buyerId], references: [id])
+  vendor  Vendor    @relation(fields: [vendorId], references: [id])
+  boda    Boda?     @relation(fields: [bodaId], references: [id])
+  items   OrderItem[]
+  payment Payment?
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int    @default(1)
+  price     Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Boda {
+  id       String  @id @default(cuid())
+  userId   String  @unique
+  plateNo  String
+  isActive Boolean @default(true)
+
+  user   User    @relation(fields: [userId], references: [id])
+  orders Order[]
+}
+
+model Payment {
+  id        String    @id @default(cuid())
+  orderId   String    @unique
+  amount    Int
+  method    PayMethod
+  status    PayStatus @default(PENDING)
+  reference String?
+  createdAt DateTime  @default(now())
+
+  order Order @relation(fields: [orderId], references: [id])
+}

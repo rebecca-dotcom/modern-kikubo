@@ -1,0 +1,97 @@
+.dashboard { max-width: 900px; margin: 0 auto; padding: 2rem; }
+.dash-loading { text-align: center; padding: 4rem; color: #888; }
+
+.dash-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.dash-header h1 { font-size: 1.8rem; margin: 0 0 4px; }
+.dash-sub { color: #888; margin: 0; font-size: 0.9rem; }
+
+.status-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.status-badge.active   { background: #e6f4ee; color: #2F7D5B; }
+.status-badge.inactive { background: #fff0e0; color: #c07000; }
+
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+.stat-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1.25rem;
+  text-align: center;
+}
+.stat-num   { font-size: 2rem; font-weight: 800; margin: 0 0 4px; }
+.stat-label { font-size: 0.8rem; color: #888; margin: 0; }
+
+.dash-section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+.dash-empty { color: #aaa; font-size: 0.9rem; }
+
+.orders-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.order-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+.order-id { color: #888; font-family: monospace; }
+
+.order-status { margin-left: auto; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; }
+.order-status.pending   { color: #c07000; }
+.order-status.paid      { color: #2F7D5B; }
+.order-status.delivered { color: #1a6b3a; }
+.order-status.cancelled { color: #c00; }
+
+.shop-setup-form { display: flex; flex-direction: column; gap: 1.25rem; max-width: 480px; }
+.shop-setup-form label { display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; font-weight: 600; }
+.shop-setup-form input,
+.shop-setup-form textarea { border: 1.5px solid #ddd; border-radius: 8px; padding: 0.75rem 1rem; font-size: 1rem; font-family: inherit; outline: none; }
+.shop-setup-form input:focus,
+.shop-setup-form textarea:focus { border-color: #2F7D5B; }
+.btn-dark { background: #111; color: #fff; border: none; border-radius: 8px; padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 700; cursor: pointer; }
+.btn-dark:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-error { color: #c00; font-size: 0.9rem; }
+
+.dash-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.shop-setup-form select { border: 1.5px solid #ddd; border-radius: 8px; padding: 0.75rem 1rem; font-size: 1rem; font-family: inherit; outline: none; background: #fff; }
+.shop-setup-form select:focus { border-color: #2F7D5B; }
+
+.listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.listing-card { background: #fff; border: 1px solid #eee; border-radius: 10px; overflow: hidden; }
+.listing-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+.listing-info { padding: 0.75rem; }
+.listing-title { font-weight: 700; font-size: 0.9rem; margin: 0 0 4px; }
+.listing-meta { font-size: 0.75rem; color: #888; margin: 0 0 4px; }
+.listing-price { font-size: 0.9rem; font-weight: 700; color: #2F7D5B; margin: 0; }
+
+.order-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.25rem; }
+.order-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem; }
+.order-card-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; font-size: 0.85rem; }
+.order-status-pill { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; }
+.order-address { color: #666; }
+.order-total { font-weight: 700; }
+.order-boda { font-size: 0.85rem; color: #2F7D5B; margin-top: 0.25rem; }
+.order-items-list { display: flex; flex-direction: column; gap: 0.2rem; margin: 0.25rem 0; }
+.order-item-row { display: flex; justify-content: space-between; font-size: 0.88rem; color: #444; }
+
+.admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.admin-tab { background: #f0f0f0; border: none; border-radius: 20px; padding: 0.5rem 1.25rem; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
+.admin-tab.active { background: #111; color: #fff; }

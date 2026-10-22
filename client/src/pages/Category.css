@@ -1,0 +1,47 @@
+.category-page { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.category-header h1 { font-size: 2rem; font-weight: 800; margin: 0; }
+
+.filter-search {
+  padding: 0.6rem 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  width: 260px;
+}
+.filter-search:focus { border-color: #2F7D5B; }
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.loading-text, .empty-text { text-align: center; color: #888; padding: 4rem 0; }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+.pagination button {
+  padding: 0.5rem 1.2rem;
+  border: 1.5px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.pagination button:disabled { opacity: 0.4; cursor: default; }
+.pagination button:not(:disabled):hover { border-color: #2F7D5B; color: #2F7D5B; }
