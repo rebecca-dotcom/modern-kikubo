@@ -17,6 +17,7 @@ export default function VendorDashboard() {
   const [photoPreview, setPhotoPreview] = useState('');
   const [addErr, setAddErr]       = useState('');
   const [addSaving, setAddSaving] = useState(false);
+  const [deletingId, setDeletingId] = useState(null);
 
   function load() {
     api.get('/vendors/me')
@@ -42,6 +43,17 @@ export default function VendorDashboard() {
     if (!file) return;
     setPhotoFile(file);
     setPhotoPreview(URL.createObjectURL(file));
+  }
+
+  async function deleteListing(id) {
+    if (!window.confirm('Delete this listing?')) return;
+    setDeletingId(id);
+    try {
+      await api.delete(`/products/${id}`);
+      load();
+    } catch (e) {
+      alert('Could not delete listing');
+    } finally { setDeletingId(null); }
   }
 
   async function addListing(e) {
@@ -172,11 +184,20 @@ export default function VendorDashboard() {
         <div className="listings-grid">
           {data.products.map(p => (
             <div key={p.id} className="listing-card">
-              {p.photos[0] && <img src={p.photos[0]} alt={p.title} className="listing-img" />}
+              {p.photos[0]
+                ? <img src={p.photos[0]} alt={p.title} className="listing-img" />
+                : <div className="listing-img listing-no-photo">No photo</div>}
               <div className="listing-info">
                 <p className="listing-title">{p.title}</p>
                 <p className="listing-meta">{p.category} · {p.size} · {p.condition}</p>
                 <p className="listing-price">UGX {p.price.toLocaleString()}</p>
+                <button
+                  className="btn-delete"
+                  onClick={() => deleteListing(p.id)}
+                  disabled={deletingId === p.id}
+                >
+                  {deletingId === p.id ? 'Deleting...' : 'Delete'}
+                </button>
               </div>
             </div>
           ))}
