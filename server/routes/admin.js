@@ -55,7 +55,7 @@ router.get('/bodas', async (req, res) => {
 router.get('/subscriptions', async (req, res) => {
   const subs = await prisma.subscription.findMany({
     include: { vendor: { include: { user: { select: { name: true, email: true } } } } },
-    orderBy: { createdAt: 'desc' },
+    orderBy: { paidAt: 'desc' },
   });
   res.json(subs);
 });
