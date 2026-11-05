@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
+import DashboardLayout from '../components/DashboardLayout';
 import './Dashboard.css';
 
 const STATUS_COLOR = { PENDING:'#c07000', PAID:'#2F7D5B', PREPARING:'#1a6b3a', PICKED_UP:'#0055aa', DELIVERED:'#1a6b3a', CANCELLED:'#c00' };
@@ -11,17 +12,11 @@ export default function BuyerDashboard() {
     api.get('/orders/my').then(r => setOrders(r.data)).catch(() => setOrders([]));
   }, []);
 
-  if (!orders) return <p className="dash-loading">Loading your orders...</p>;
+  if (!orders) return <DashboardLayout title="My Orders"><p className="dash-loading">Loading your orders...</p></DashboardLayout>;
 
   return (
+    <DashboardLayout title="My Orders">
     <div className="dashboard">
-      <div className="dash-header">
-        <div>
-          <h1>My Orders</h1>
-          <p className="dash-sub">Track your deliveries</p>
-        </div>
-      </div>
-
       {orders.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '4rem 0' }}>
           <p style={{ fontSize: '1.1rem', marginBottom: '1rem' }}>You haven't ordered anything yet.</p>
@@ -59,5 +54,6 @@ export default function BuyerDashboard() {
         </div>
       )}
     </div>
+    </DashboardLayout>
   );
 }

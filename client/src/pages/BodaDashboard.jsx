@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
+import DashboardLayout from '../components/DashboardLayout';
 import './Dashboard.css';
 
 const STATUS_COLOR = { PENDING:'#c07000', PAID:'#2F7D5B', PREPARING:'#555', PICKED_UP:'#0055aa', DELIVERED:'#1a6b3a', CANCELLED:'#c00' };
@@ -30,17 +31,11 @@ export default function BodaDashboard() {
     } finally { setUpdating(null); }
   }
 
-  if (!orders) return <p className="dash-loading">Loading deliveries...</p>;
+  if (!orders) return <DashboardLayout title="My Deliveries"><p className="dash-loading">Loading deliveries...</p></DashboardLayout>;
 
   return (
+    <DashboardLayout title="My Deliveries">
     <div className="dashboard">
-      <div className="dash-header">
-        <div>
-          <h1>My Deliveries</h1>
-          <p className="dash-sub">Orders assigned to you</p>
-        </div>
-      </div>
-
       {orders.length === 0 ? (
         <p className="dash-empty">No deliveries assigned yet.</p>
       ) : (
@@ -76,5 +71,6 @@ export default function BodaDashboard() {
         </div>
       )}
     </div>
+    </DashboardLayout>
   );
 }

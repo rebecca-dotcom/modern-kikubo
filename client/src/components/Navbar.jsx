@@ -1,10 +1,15 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
+
+const DASHBOARD_PATHS = ['/vendor', '/orders', '/boda', '/admin'];
 
 export default function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  if (DASHBOARD_PATHS.some(p => location.pathname.startsWith(p))) return null;
 
   const handleLogout = () => { logout(); navigate('/'); };
 

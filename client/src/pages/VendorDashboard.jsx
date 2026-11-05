@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
+import DashboardLayout from '../components/DashboardLayout';
 import './Dashboard.css';
 
 const EMPTY_PRODUCT = { title: '', description: '', price: '', category: 'WOMEN', size: '', condition: 'GOOD' };
@@ -74,11 +75,11 @@ export default function VendorDashboard() {
     } finally { setAddSaving(false); }
   }
 
-  if (!data && !noShop) return <p className="dash-loading">Loading your shop...</p>;
+  if (!data && !noShop) return <DashboardLayout title="Vendor Dashboard"><p className="dash-loading">Loading your shop...</p></DashboardLayout>;
 
   if (noShop) return (
+    <DashboardLayout title="Set up your shop">
     <div className="dashboard">
-      <h1 style={{ marginBottom: '0.25rem' }}>Set up your shop</h1>
       <p className="dash-sub" style={{ marginBottom: '2rem' }}>Tell buyers about your store</p>
       <form onSubmit={createShop} className="shop-setup-form">
         {err && <p className="form-error">{err}</p>}
@@ -96,15 +97,14 @@ export default function VendorDashboard() {
         </button>
       </form>
     </div>
+    </DashboardLayout>
   );
 
   return (
+    <DashboardLayout title={data.shopName}>
     <div className="dashboard">
       <div className="dash-header">
-        <div>
-          <h1>{data.shopName}</h1>
-          <p className="dash-sub">{data.location}</p>
-        </div>
+        <p className="dash-sub">{data.location}</p>
         <span className={`status-badge ${data.isActive ? 'active' : 'inactive'}`}>
           {data.isActive ? 'Active' : 'Subscription needed'}
         </span>
@@ -219,5 +219,6 @@ export default function VendorDashboard() {
         </div>
       )}
     </div>
+    </DashboardLayout>
   );
 }
