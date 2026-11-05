@@ -51,6 +51,15 @@ router.get('/bodas', async (req, res) => {
   res.json(bodas);
 });
 
+// GET /api/admin/subscriptions
+router.get('/subscriptions', async (req, res) => {
+  const subs = await prisma.subscription.findMany({
+    include: { vendor: { include: { user: { select: { name: true, email: true } } } } },
+    orderBy: { createdAt: 'desc' },
+  });
+  res.json(subs);
+});
+
 // PATCH /api/admin/vendors/:id/activate
 router.patch('/vendors/:id/activate', async (req, res) => {
   const vendor = await prisma.vendor.update({

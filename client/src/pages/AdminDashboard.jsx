@@ -50,17 +50,19 @@ export default function AdminDashboard() {
   const [searchParams] = useSearchParams();
   const tab = searchParams.get('tab') || 'overview';
 
-  const [stats, setStats]       = useState(null);
-  const [vendors, setVendors]   = useState([]);
-  const [orders, setOrders]     = useState([]);
-  const [bodas, setBodas]       = useState([]);
-  const [updating, setUpdating] = useState(null);
+  const [stats, setStats]             = useState(null);
+  const [vendors, setVendors]         = useState([]);
+  const [orders, setOrders]           = useState([]);
+  const [bodas, setBodas]             = useState([]);
+  const [subscriptions, setSubscriptions] = useState([]);
+  const [updating, setUpdating]       = useState(null);
 
   useEffect(() => {
     api.get('/admin/stats').then(r => setStats(r.data)).catch(() => {});
     api.get('/admin/vendors').then(r => setVendors(r.data)).catch(() => {});
     api.get('/admin/orders').then(r => setOrders(r.data)).catch(() => {});
     api.get('/admin/bodas').then(r => setBodas(r.data)).catch(() => {});
+    api.get('/admin/subscriptions').then(r => setSubscriptions(r.data)).catch(() => {});
   }, []);
 
   async function toggleVendor(vendorId, current) {
@@ -84,18 +86,6 @@ export default function AdminDashboard() {
     <DashboardLayout title="Admin Dashboard">
       <div className="dashboard">
 
-        {/* Stats strip — always visible */}
-        {stats && (
-          <div className="dash-stats" style={{ gridTemplateColumns: 'repeat(5,1fr)' }}>
-            {[['Vendors', stats.vendors], ['Buyers', stats.buyers], ['Products', stats.products], ['Orders', stats.orders], ['Subscriptions', stats.subscriptions]].map(([label, val]) => (
-              <div className="stat-card" key={label}>
-                <p className="stat-num">{val}</p>
-                <p className="stat-label">{label}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
         {/* Overview tab — bar chart */}
         {tab === 'overview' && (
           <div>
@@ -104,6 +94,26 @@ export default function AdminDashboard() {
               {orders.length === 0
                 ? <p className="dash-empty" style={{ margin: 0 }}>No orders yet.</p>
                 : <OrdersBarChart orders={orders} />
+              }
+            </div>
+
+            <h2 className="dash-section-title" style={{ marginTop: '2rem', marginBottom: '1rem' }}>Subscriptions</h2>
+            <div className="orders-list">
+              {subscriptions.length === 0
+                ? <p className="dash-empty">No subscriptions yet.</p>
+                : subscriptions.map(s => (
+                  <div key={s.id} className="order-card">
+                    <div className="order-card-top">
+                      <span style={{ fontWeight: 700 }}>{s.vendor?.shopName}</span>
+                      <span className={`status-badge ${s.status === 'ACTIVE' ? 'active' : 'inactive'}`}>{s.status}</span>
+                    </div>
+                    <p style={{ margin: '4px 0', fontSize: '0.85rem', color: '#666' }}>{s.vendor?.user?.name} · {s.vendor?.user?.email}</p>
+                    <p style={{ margin: '4px 0', fontSize: '0.82rem', color: '#888' }}>
+                      Plan: {s.plan} &nbsp;·&nbsp; UGX {s.amount?.toLocaleString()}
+                      {s.expiresAt && <> &nbsp;·&nbsp; Expires: {new Date(s.expiresAt).toLocaleDateString()}</>}
+                    </p>
+                  </div>
+                ))
               }
             </div>
           </div>
