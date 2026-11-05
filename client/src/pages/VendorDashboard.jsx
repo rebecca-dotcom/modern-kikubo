@@ -5,6 +5,88 @@ import './Dashboard.css';
 
 const EMPTY_PRODUCT = { title: '', description: '', price: '', category: 'WOMEN', size: '', condition: 'GOOD' };
 
+const PLANS = [
+  { key: 'MONTHLY',   label: 'Monthly',   price: 'UGX 50,000',  days: '30 days'  },
+  { key: 'QUARTERLY', label: 'Quarterly', price: 'UGX 120,000', days: '90 days'  },
+  { key: 'YEARLY',    label: 'Yearly',    price: 'UGX 400,000', days: '365 days' },
+];
+
+function SubscribeModal({ onClose, onSuccess }) {
+  const [plan, setPlan]       = useState('MONTHLY');
+  const [provider, setProvider] = useState('MTN');
+  const [phone, setPhone]     = useState('');
+  const [step, setStep]       = useState('form'); // form | processing | success
+  const [err, setErr]         = useState('');
+
+  async function handlePay(e) {
+    e.preventDefault();
+    setErr('');
+    setStep('processing');
+    await new Promise(r => setTimeout(r, 2200));
+    try {
+      await api.post('/subscriptions/pay', { plan, phone, provider });
+      setStep('success');
+    } catch (e) {
+      setErr(e.response?.data?.error || 'Payment failed');
+      setStep('form');
+    }
+  }
+
+  return (
+    <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.5)', display:'flex', alignItems:'center', justifyContent:'center', zIndex:1000 }}>
+      <div style={{ background:'#fff', borderRadius:'12px', padding:'2rem', width:'100%', maxWidth:'420px', position:'relative' }}>
+        {step === 'success' ? (
+          <div style={{ textAlign:'center', padding:'1rem 0' }}>
+            <div style={{ fontSize:'2.5rem', marginBottom:'0.75rem' }}>✅</div>
+            <h2 style={{ margin:'0 0 0.5rem' }}>Shop Activated!</h2>
+            <p style={{ color:'#555', marginBottom:'1.5rem' }}>Your subscription is now active. You can start selling.</p>
+            <button className="btn-dark" onClick={onSuccess}>Go to my shop →</button>
+          </div>
+        ) : step === 'processing' ? (
+          <div style={{ textAlign:'center', padding:'2rem 0' }}>
+            <div style={{ fontSize:'2rem', marginBottom:'1rem' }}>⏳</div>
+            <p style={{ fontWeight:600 }}>Processing payment...</p>
+            <p style={{ color:'#666', fontSize:'0.85rem' }}>Check your phone for the {provider} MoMo prompt</p>
+          </div>
+        ) : (
+          <>
+            <button onClick={onClose} style={{ position:'absolute', top:'1rem', right:'1rem', background:'none', border:'none', fontSize:'1.2rem', cursor:'pointer' }}>✕</button>
+            <h2 style={{ margin:'0 0 1.5rem' }}>Activate your shop</h2>
+            {err && <p style={{ color:'#c00', fontSize:'0.85rem', marginBottom:'1rem' }}>{err}</p>}
+
+            <p style={{ fontWeight:600, marginBottom:'0.5rem' }}>Choose a plan</p>
+            <div style={{ display:'flex', gap:'0.5rem', marginBottom:'1.25rem' }}>
+              {PLANS.map(p => (
+                <button key={p.key} onClick={() => setPlan(p.key)}
+                  style={{ flex:1, padding:'0.6rem 0.4rem', borderRadius:'8px', border:`2px solid ${plan===p.key?'#2F7D5B':'#ddd'}`, background: plan===p.key?'#f0faf5':'#fff', cursor:'pointer', fontSize:'0.78rem', textAlign:'center' }}>
+                  <strong>{p.label}</strong><br/>{p.price}<br/><span style={{ color:'#888' }}>{p.days}</span>
+                </button>
+              ))}
+            </div>
+
+            <p style={{ fontWeight:600, marginBottom:'0.5rem' }}>Pay with</p>
+            <div style={{ display:'flex', gap:'0.75rem', marginBottom:'1.25rem' }}>
+              {['MTN','AIRTEL'].map(pr => (
+                <button key={pr} onClick={() => setProvider(pr)}
+                  style={{ flex:1, padding:'0.6rem', borderRadius:'8px', border:`2px solid ${provider===pr?'#2F7D5B':'#ddd'}`, background: provider===pr?'#f0faf5':'#fff', cursor:'pointer', fontWeight:600, fontSize:'0.9rem' }}>
+                  {pr === 'MTN' ? '🟡 MTN MoMo' : '🔴 Airtel Money'}
+                </button>
+              ))}
+            </div>
+
+            <form onSubmit={handlePay}>
+              <label style={{ display:'block', fontWeight:600, marginBottom:'0.4rem' }}>Mobile number</label>
+              <input required placeholder="e.g. 0771234567" value={phone} onChange={e => setPhone(e.target.value)}
+                style={{ width:'100%', padding:'0.6rem 0.75rem', borderRadius:'8px', border:'1px solid #ddd', fontSize:'0.95rem', marginBottom:'1.25rem', boxSizing:'border-box' }} />
+              <button type="submit" className="btn-dark" style={{ width:'100%' }}>Pay & Activate →</button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function VendorDashboard() {
   const [data, setData]           = useState(null);
   const [noShop, setNoShop]       = useState(false);
@@ -19,6 +101,7 @@ export default function VendorDashboard() {
   const [addErr, setAddErr]       = useState('');
   const [addSaving, setAddSaving] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [showSubscribe, setShowSubscribe] = useState(false);
 
   function load() {
     api.get('/vendors/me')
@@ -102,12 +185,26 @@ export default function VendorDashboard() {
 
   return (
     <DashboardLayout title={data.shopName}>
+    {showSubscribe && (
+      <SubscribeModal
+        onClose={() => setShowSubscribe(false)}
+        onSuccess={() => { setShowSubscribe(false); load(); }}
+      />
+    )}
     <div className="dashboard">
       <div className="dash-header">
         <p className="dash-sub">{data.location}</p>
-        <span className={`status-badge ${data.isActive ? 'active' : 'inactive'}`}>
-          {data.isActive ? 'Active' : 'Subscription needed'}
-        </span>
+        <div style={{ display:'flex', alignItems:'center', gap:'0.75rem' }}>
+          <span className={`status-badge ${data.isActive ? 'active' : 'inactive'}`}>
+            {data.isActive ? 'Active' : 'Subscription needed'}
+          </span>
+          {!data.isActive && (
+            <button className="btn-dark" style={{ fontSize:'0.82rem', padding:'0.4rem 0.9rem', background:'#2F7D5B' }}
+              onClick={() => setShowSubscribe(true)}>
+              Subscribe →
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="dash-stats">

@@ -9,6 +9,7 @@ const vendorRoutes   = require('./routes/vendors');
 const orderRoutes    = require('./routes/orders');
 const deliveryRoutes = require('./routes/delivery');
 const adminRoutes    = require('./routes/admin');
+const subRoutes      = require('./routes/subscriptions');
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use('/api/products', productRoutes);
 app.use('/api/vendors',  vendorRoutes);
 app.use('/api/orders',   orderRoutes);
 app.use('/api/delivery', deliveryRoutes);
-app.use('/api/admin',    adminRoutes);
+app.use('/api/admin',         adminRoutes);
+app.use('/api/subscriptions', subRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', app: 'Modern Kikubo' }));
 

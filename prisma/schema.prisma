@@ -88,9 +88,10 @@ model Vendor {
 model Subscription {
   id        String    @id @default(cuid())
   vendorId  String
+  plan      String    @default("MONTHLY")
   paidAt    DateTime  @default(now())
   expiresAt DateTime
-  amount    Int       @default(15000)
+  amount    Int       @default(50000)
   status    SubStatus @default(ACTIVE)
 
   vendor Vendor @relation(fields: [vendorId], references: [id])
