@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import api from '../api';
 import ProductCard from '../components/ProductCard';
 import './Category.css';
@@ -8,11 +8,17 @@ const LABELS = { WOMEN: 'Women', MEN: 'Men', CHILDREN: 'Children', SPORTS: 'Spor
 
 export default function Category() {
   const { category } = useParams();
+  const [urlParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(urlParams.get('search') || '');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    setSearch(urlParams.get('search') || '');
+    setPage(1);
+  }, [urlParams.get('search')]);
 
   useEffect(() => {
     setLoading(true);

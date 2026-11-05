@@ -10,6 +10,7 @@ import VendorDashboard from './pages/VendorDashboard';
 import BuyerDashboard from './pages/BuyerDashboard';
 import BodaDashboard from './pages/BodaDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import SearchResults from './pages/SearchResults';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/orders"             element={<BuyerDashboard />} />
           <Route path="/boda"               element={<BodaDashboard />} />
           <Route path="/admin"              element={<AdminDashboard />} />
+          <Route path="/search"             element={<SearchResults />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -63,7 +63,7 @@ export default function DashboardLayout({ title, children }) {
 
   function handleSearch(e) {
     e.preventDefault();
-    if (searchQ.trim()) navigate(`/category/WOMEN?search=${encodeURIComponent(searchQ.trim())}`);
+    if (searchQ.trim()) navigate(`/search?q=${encodeURIComponent(searchQ.trim())}`);
   }
 
   function isActive(link) {
