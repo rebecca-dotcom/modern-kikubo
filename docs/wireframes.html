@@ -1,0 +1,1315 @@
+<title>Modern Kikubo Wireframes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+
+<style>
+  /* ── Token system ───────────────────────────────────────────── */
+  :root {
+    --bg:         #f0ede8;
+    --surface:    #ffffff;
+    --surface-2:  #f7f5f2;
+    --border:     #c8c4bd;
+    --border-2:   #ddd9d3;
+    --placeholder:#d1cdc6;
+    --label:      #888078;
+    --text:       #2a2520;
+    --text-2:     #5c5650;
+    --annotation: #c0392b;
+    --ann-bg:     #fdf0ee;
+    --accent:     #2d6a4f;
+    --accent-lt:  #d8ede4;
+    --tab-active: #2a2520;
+    --tab-bg:     #e4e1db;
+    --shadow:     0 1px 3px rgba(0,0,0,.12);
+    --radius:     6px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:         #1a1917;
+      --surface:    #242220;
+      --surface-2:  #1f1d1b;
+      --border:     #3a3732;
+      --border-2:   #2e2c28;
+      --placeholder:#38352f;
+      --label:      #7a7570;
+      --text:       #f0ede8;
+      --text-2:     #a8a49e;
+      --annotation: #e06050;
+      --ann-bg:     #2a1f1e;
+      --accent:     #52b788;
+      --accent-lt:  #1b3326;
+      --tab-active: #f0ede8;
+      --tab-bg:     #2a2824;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:         #1a1917;
+    --surface:    #242220;
+    --surface-2:  #1f1d1b;
+    --border:     #3a3732;
+    --border-2:   #2e2c28;
+    --placeholder:#38352f;
+    --label:      #7a7570;
+    --text:       #f0ede8;
+    --text-2:     #a8a49e;
+    --annotation: #e06050;
+    --ann-bg:     #2a1f1e;
+    --accent:     #52b788;
+    --accent-lt:  #1b3326;
+    --tab-active: #f0ede8;
+    --tab-bg:     #2a2824;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 14px;
+    padding-left:  max(16px, env(safe-area-inset-left,  0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 0;
+  }
+
+  /* ── Page header ─────────────────────────────────────────────── */
+  .page-header {
+    padding: 28px 0 0;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .page-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--text);
+    text-wrap: balance;
+  }
+  .page-header p {
+    margin: 0 0 20px;
+    color: var(--text-2);
+    font-size: 13px;
+  }
+  .page-header .meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--label);
+    margin-bottom: 20px;
+    letter-spacing: .02em;
+  }
+  .page-header .meta span { font-variant-numeric: tabular-nums; }
+
+  /* ── Screen tabs ─────────────────────────────────────────────── */
+  .screen-tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0;
+    border-bottom: 2px solid var(--border);
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .screen-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 9px 16px;
+    border: none;
+    background: none;
+    color: var(--text-2);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color .15s, border-color .15s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active {
+    color: var(--tab-active);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── Screen wrapper ──────────────────────────────────────────── */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  .screen-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding-block: 24px;
+  }
+
+  .screen-label {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .screen-label h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+  .screen-label .dim-tag {
+    font-size: 11px;
+    color: var(--label);
+    background: var(--surface-2);
+    border: 1px solid var(--border-2);
+    padding: 2px 7px;
+    border-radius: 10px;
+    letter-spacing: .03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .screen-label .role-tag {
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-lt);
+    border: 1px solid var(--accent);
+    padding: 2px 7px;
+    border-radius: 10px;
+    letter-spacing: .03em;
+    font-weight: 600;
+  }
+
+  /* ── Wireframe canvas ────────────────────────────────────────── */
+  .wf-canvas {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  /* ── Annotation list ─────────────────────────────────────────── */
+  .ann-list {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 8px;
+  }
+  .ann-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background: var(--ann-bg);
+    border: 1px solid var(--annotation);
+    border-opacity: .3;
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    font-size: 12px;
+    color: var(--text-2);
+    line-height: 1.5;
+    min-width: 0;
+  }
+  .ann-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    background: var(--annotation);
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    border-radius: 50%;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Generic wireframe primitives ───────────────────────────── */
+  .wf-nav {
+    background: var(--surface-2);
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    height: 48px;
+    gap: 12px;
+  }
+  .wf-logo {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .wf-spacer { flex: 1; }
+  .wf-search-bar {
+    flex: 1;
+    max-width: 280px;
+    height: 30px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 6px;
+    color: var(--label);
+    font-size: 12px;
+  }
+  .wf-search-bar svg { opacity: .5; }
+  .wf-btn {
+    height: 28px;
+    padding: 0 10px;
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+  .wf-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .wf-img {
+    background: var(--placeholder);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--label);
+    font-size: 11px;
+    border: 1.5px dashed var(--border);
+    position: relative;
+  }
+  .wf-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 8px,
+      rgba(0,0,0,.04) 8px,
+      rgba(0,0,0,.04) 9px
+    );
+  }
+  .wf-img span {
+    position: relative;
+    z-index: 1;
+    font-size: 11px;
+    color: var(--label);
+  }
+  .wf-text-block {
+    background: var(--placeholder);
+    border-radius: 3px;
+    height: 10px;
+  }
+  .wf-ann-dot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: var(--annotation);
+    color: #fff;
+    font-weight: 700;
+    font-size: 10px;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 10;
+  }
+  .wf-pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .03em;
+  }
+  .pill-green  { background: #d4edda; color: #155724; }
+  .pill-yellow { background: #fff3cd; color: #856404; }
+  .pill-blue   { background: #cce5ff; color: #004085; }
+  .pill-red    { background: #f8d7da; color: #721c24; }
+  .pill-grey   { background: var(--surface-2); color: var(--label); border: 1px solid var(--border-2); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .pill-green  { background: #1a3626; color: #52b788; }
+    :root:not([data-theme="light"]) .pill-yellow { background: #2d2412; color: #d4a017; }
+    :root:not([data-theme="light"]) .pill-blue   { background: #102030; color: #5eb8ff; }
+    :root:not([data-theme="light"]) .pill-red    { background: #2d1215; color: #e06050; }
+  }
+  :root[data-theme="dark"] .pill-green  { background: #1a3626; color: #52b788; }
+  :root[data-theme="dark"] .pill-yellow { background: #2d2412; color: #d4a017; }
+  :root[data-theme="dark"] .pill-blue   { background: #102030; color: #5eb8ff; }
+  :root[data-theme="dark"] .pill-red    { background: #2d1215; color: #e06050; }
+
+  /* ── Layout helpers ──────────────────────────────────────────── */
+  .row   { display: flex; gap: 0; }
+  .col   { display: flex; flex-direction: column; }
+  .gap8  { gap: 8px; }
+  .gap12 { gap: 12px; }
+  .gap16 { gap: 16px; }
+  .p12   { padding: 12px; }
+  .p16   { padding: 16px; }
+
+  /* ── Sidebar ─────────────────────────────────────────────────── */
+  .wf-sidebar {
+    width: 160px;
+    min-width: 160px;
+    background: var(--surface-2);
+    border-right: 1.5px solid var(--border);
+    padding: 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .wf-sidebar .logo {
+    padding: 4px 14px 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--accent);
+    border-bottom: 1px solid var(--border-2);
+    margin-bottom: 8px;
+  }
+  .wf-nav-item {
+    padding: 8px 14px;
+    font-size: 12px;
+    color: var(--text-2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+  .wf-nav-item.active {
+    background: var(--accent-lt);
+    color: var(--accent);
+    font-weight: 600;
+    border-left: 3px solid var(--accent);
+    padding-left: 11px;
+  }
+  .wf-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    background: #e53e3e;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 8px;
+    margin-left: auto;
+  }
+
+  /* ── Dashboard content area ──────────────────────────────────── */
+  .wf-main {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .wf-welcome {
+    background: var(--accent-lt);
+    border-bottom: 1px solid var(--border-2);
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .wf-content { padding: 16px; }
+
+  /* ── Stat tiles ──────────────────────────────────────────────── */
+  .wf-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .wf-stat {
+    background: var(--surface-2);
+    border: 1.5px solid var(--border-2);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+  }
+  .wf-stat .s-label { font-size: 10px; color: var(--label); letter-spacing: .04em; margin-bottom: 4px; }
+  .wf-stat .s-val { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; }
+
+  /* ── Table ───────────────────────────────────────────────────── */
+  .wf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .wf-table th {
+    text-align: left;
+    padding: 7px 10px;
+    background: var(--surface-2);
+    border-bottom: 2px solid var(--border);
+    color: var(--label);
+    font-weight: 600;
+    letter-spacing: .04em;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .wf-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border-2);
+    color: var(--text-2);
+    vertical-align: middle;
+  }
+  .wf-table tr:last-child td { border-bottom: none; }
+
+  /* ── Chart bars ──────────────────────────────────────────────── */
+  .wf-chart {
+    padding: 12px 16px;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border-2);
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+  }
+  .wf-chart-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--label);
+    letter-spacing: .04em;
+    margin-bottom: 10px;
+  }
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 80px;
+  }
+  .bar-col { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+  .bar-bar { width: 100%; border-radius: 3px 3px 0 0; }
+  .bar-lbl { font-size: 9px; color: var(--label); text-align: center; }
+
+  /* ── Modal overlay ───────────────────────────────────────────── */
+  .wf-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+  }
+  .wf-modal {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    width: 280px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.2);
+    overflow: hidden;
+  }
+  .wf-modal-head {
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .wf-modal-body { padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+  .wf-field { display: flex; flex-direction: column; gap: 4px; }
+  .wf-field label { font-size: 10px; color: var(--label); font-weight: 600; letter-spacing: .04em; }
+  .wf-input {
+    height: 32px;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    padding: 0 10px;
+    font-size: 12px;
+    color: var(--text-2);
+    display: flex;
+    align-items: center;
+  }
+  .wf-radio-row { display: flex; gap: 8px; }
+  .wf-radio {
+    flex: 1;
+    height: 30px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-2);
+  }
+  .wf-radio.selected { border-color: var(--accent); background: var(--accent-lt); color: var(--accent); font-weight: 600; }
+
+  /* ── Product card ────────────────────────────────────────────── */
+  .wf-products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .wf-product-card {
+    border: 1.5px solid var(--border-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .wf-product-card .card-info {
+    padding: 8px 10px;
+  }
+  .wf-product-card .card-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .wf-product-card .card-price {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .wf-product-card .card-vendor {
+    font-size: 10px;
+    color: var(--label);
+  }
+
+  /* ── Category chips ──────────────────────────────────────────── */
+  .cat-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .cat-chip {
+    padding: 5px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 20px;
+    font-size: 11px;
+    color: var(--text-2);
+    font-weight: 500;
+  }
+  .cat-chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* ── Hero ────────────────────────────────────────────────────── */
+  .wf-hero {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px;
+    gap: 16px;
+    min-height: 110px;
+    background: linear-gradient(135deg, var(--accent-lt) 60%, var(--surface-2));
+    border-bottom: 1.5px solid var(--border-2);
+  }
+  .wf-hero-text { flex: 1; }
+  .wf-hero-text h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+  .wf-hero-text p {
+    font-size: 11px;
+    color: var(--text-2);
+    margin: 0 0 10px;
+  }
+
+  /* ── Category grid ───────────────────────────────────────────── */
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 14px 14px;
+    background: var(--surface-2);
+    border-bottom: 1.5px solid var(--border-2);
+  }
+  .cat-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    border: 1.5px solid var(--border-2);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .cat-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--placeholder);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .cat-cell span {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-2);
+    letter-spacing: .04em;
+  }
+
+  /* ── Section header ──────────────────────────────────────────── */
+  .sec-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 14px 14px 0;
+  }
+  .sec-head h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+  }
+  .sec-head a {
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* ── Responsive tweaks ───────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .wf-stats { grid-template-columns: repeat(2, 1fr); }
+    .wf-products { grid-template-columns: repeat(2, 1fr); }
+    .cat-grid { grid-template-columns: repeat(3, 1fr); }
+    .wf-sidebar { width: 120px; min-width: 120px; }
+    .bar-chart { gap: 4px; }
+  }
+</style>
+
+<!-- ── Page header ─────────────────────────────────────────────── -->
+<div class="page-header">
+  <h1>Modern Kikubo — UI Wireframes</h1>
+  <p>Low-fidelity screen designs for the multi-vendor second-hand clothes marketplace. Each screen shows component layout, user flows, and interaction points.</p>
+  <div class="meta">
+    <span>Project: Modern Kikubo</span>
+    <span>Author: Rebecca Nyandeng</span>
+    <span>Role: Health Informatics · ECRI</span>
+    <span>Screens: 5</span>
+  </div>
+</div>
+
+<!-- ── Tab navigation ─────────────────────────────────────────── -->
+<div class="screen-tabs" role="tablist">
+  <button class="tab-btn active" onclick="showScreen(0)" role="tab">1. Home Page</button>
+  <button class="tab-btn" onclick="showScreen(1)" role="tab">2. Product Detail</button>
+  <button class="tab-btn" onclick="showScreen(2)" role="tab">3. Vendor Dashboard</button>
+  <button class="tab-btn" onclick="showScreen(3)" role="tab">4. Admin Dashboard</button>
+  <button class="tab-btn" onclick="showScreen(4)" role="tab">5. Buyer Orders</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 1: Home Page (Guest/Buyer)
+════════════════════════════════════════════════════════════════ -->
+<div class="screen active" id="screen-0">
+  <div class="screen-wrap">
+    <div class="screen-label">
+      <h2>Home Page</h2>
+      <span class="dim-tag">1366 × 768</span>
+      <span class="role-tag">Guest / Buyer</span>
+    </div>
+
+    <div class="wf-canvas">
+      <!-- Navbar -->
+      <div class="wf-nav" style="position:relative;">
+        <span class="wf-ann-dot" style="top:-8px;left:10px;">1</span>
+        <div class="wf-logo">Modern Kikubo</div>
+        <div class="wf-spacer"></div>
+        <div class="wf-search-bar" style="position:relative;">
+          <span class="wf-ann-dot" style="top:-8px;right:-8px;">2</span>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.44 1.406a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+          Search clothes, brands, vendors…
+        </div>
+        <div class="wf-spacer"></div>
+        <div class="wf-btn">Log In</div>
+        <div class="wf-btn primary" style="margin-left:6px;">Register</div>
+      </div>
+
+      <!-- Hero -->
+      <div class="wf-hero" style="position:relative;">
+        <span class="wf-ann-dot" style="top:4px;left:4px;">3</span>
+        <div class="wf-hero-text">
+          <h3>Second-hand Fashion in Uganda</h3>
+          <p>Browse thousands of quality clothes from verified vendors.<br>Pay with MTN or Airtel MoMo — fast, safe delivery.</p>
+          <div class="wf-btn primary" style="display:inline-flex;">Shop Now</div>
+        </div>
+        <div class="wf-img" style="width:140px;height:90px;min-width:140px;border-radius:8px;">
+          <span>Hero Photo</span>
+        </div>
+      </div>
+
+      <!-- Category grid -->
+      <div style="position:relative;">
+        <span class="wf-ann-dot" style="top:4px;left:4px;">4</span>
+        <div class="cat-grid">
+          <div class="cat-cell"><div class="cat-icon">👗</div><span>WOMEN</span></div>
+          <div class="cat-cell"><div class="cat-icon">👔</div><span>MEN</span></div>
+          <div class="cat-cell"><div class="cat-icon">👕</div><span>KIDS</span></div>
+          <div class="cat-cell"><div class="cat-icon">👟</div><span>SHOES</span></div>
+          <div class="cat-cell"><div class="cat-icon">👜</div><span>BAGS</span></div>
+        </div>
+      </div>
+
+      <!-- Featured Products -->
+      <div style="padding: 0 14px 14px;">
+        <div class="sec-head"><h4>Featured Listings</h4><a href="#">View all →</a></div>
+        <div style="position:relative;">
+          <span class="wf-ann-dot" style="top:-8px;left:-8px;">5</span>
+          <div class="wf-products">
+            <div class="wf-product-card">
+              <div class="wf-img" style="height:80px;"><span>Photo</span></div>
+              <div class="card-info">
+                <div class="card-name">Floral Summer Dress</div>
+                <div class="card-price">UGX 25,000</div>
+                <div class="card-vendor">By: Kampala Thrift</div>
+              </div>
+            </div>
+            <div class="wf-product-card">
+              <div class="wf-img" style="height:80px;"><span>Photo</span></div>
+              <div class="card-info">
+                <div class="card-name">Men's Slim Chinos</div>
+                <div class="card-price">UGX 18,000</div>
+                <div class="card-vendor">By: Owino Styles</div>
+              </div>
+            </div>
+            <div class="wf-product-card">
+              <div class="wf-img" style="height:80px;"><span>Photo</span></div>
+              <div class="card-info">
+                <div class="card-name">Kids Hoodie Set</div>
+                <div class="card-price">UGX 15,000</div>
+                <div class="card-vendor">By: Beba Boutique</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="background:var(--surface-2);border-top:1.5px solid var(--border-2);padding:12px 14px;display:flex;gap:16px;font-size:11px;color:var(--label);">
+        <span>© 2026 Modern Kikubo</span>
+        <span>About</span>
+        <span>Become a Vendor</span>
+        <span>Help</span>
+      </div>
+    </div>
+
+    <div class="ann-list">
+      <div class="ann-item"><div class="ann-num">1</div><div>Top navigation bar — logo, global search, login/register buttons. Collapses to hamburger menu on mobile.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div>Search bar navigates to <code>/search?q=…</code> and queries all product categories at once.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div>Hero banner with tagline and "Shop Now" CTA. Photo slot loaded from Cloudinary.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div>Category grid — 5 tiles (WOMEN, MEN, KIDS, SHOES, BAGS). Each routes to <code>/category/[name]</code>.</div></div>
+      <div class="ann-item"><div class="ann-num">5</div><div>Featured product cards fetched from active vendor listings. Shows name, price in UGX, vendor name.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 2: Product Detail + MoMo Payment Modal
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-1">
+  <div class="screen-wrap">
+    <div class="screen-label">
+      <h2>Product Detail + Payment Modal</h2>
+      <span class="dim-tag">1366 × 768</span>
+      <span class="role-tag">Buyer</span>
+    </div>
+
+    <div class="wf-canvas">
+      <!-- Navbar -->
+      <div class="wf-nav">
+        <div class="wf-logo">Modern Kikubo</div>
+        <div class="wf-spacer"></div>
+        <div class="wf-search-bar" style="max-width:220px;">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.44 1.406a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+          Search…
+        </div>
+        <div class="wf-spacer"></div>
+        <div class="wf-btn">Kelvin M.</div>
+      </div>
+
+      <!-- Product layout -->
+      <div class="row" style="padding:16px;gap:20px;position:relative;">
+        <span class="wf-ann-dot" style="top:8px;left:8px;">1</span>
+
+        <!-- Left: Images -->
+        <div class="col gap8" style="width:220px;min-width:220px;">
+          <div class="wf-img" style="height:160px;border-radius:6px;"><span>Main Photo</span></div>
+          <div class="row gap8">
+            <div class="wf-img" style="flex:1;height:50px;border-radius:4px;"><span>Thumb</span></div>
+            <div class="wf-img" style="flex:1;height:50px;border-radius:4px;"><span>Thumb</span></div>
+            <div class="wf-img" style="flex:1;height:50px;border-radius:4px;"><span>Thumb</span></div>
+          </div>
+        </div>
+
+        <!-- Right: Details -->
+        <div class="col gap8" style="flex:1;min-width:0;">
+          <div style="font-size:11px;color:var(--label);">WOMEN · DRESSES</div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--text);">Ankara Wrap Dress – Blue</div>
+
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="wf-pill pill-green">Good Condition</span>
+            <span style="font-size:11px;color:var(--label);">Size: M</span>
+          </div>
+
+          <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;">UGX 32,000</div>
+
+          <div class="col gap8" style="position:relative;">
+            <span class="wf-ann-dot" style="top:-8px;right:0px;">2</span>
+            <div style="font-size:11px;color:var(--text-2);line-height:1.5;">
+              Beautiful Ankara fabric wrap dress. Worn twice, in excellent condition.<br>
+              Available for delivery in Kampala within 24 hours.
+            </div>
+            <div style="font-size:11px;color:var(--label);">Vendor: <strong>Kampala Thrift</strong> · 4.8 ★ (42 reviews)</div>
+          </div>
+
+          <div style="margin-top:4px;">
+            <div class="wf-btn primary" style="font-size:13px;height:36px;padding:0 20px;width:fit-content;">Buy Now — MoMo Pay</div>
+          </div>
+        </div>
+
+        <!-- MoMo Payment Modal overlay -->
+        <div class="wf-overlay" style="position:absolute;border-radius:inherit;">
+          <div class="wf-modal" style="position:relative;">
+            <span class="wf-ann-dot" style="top:-8px;right:-8px;">3</span>
+            <div class="wf-modal-head">
+              MoMo Payment
+              <span style="font-size:12px;opacity:.8;font-weight:400;">UGX 32,000</span>
+            </div>
+            <div class="wf-modal-body">
+              <div class="wf-field">
+                <label>DELIVERY ADDRESS</label>
+                <div class="wf-input">Wandegeya, Kampala</div>
+              </div>
+              <div class="wf-field">
+                <label>PAYMENT NETWORK</label>
+                <div class="wf-radio-row">
+                  <div class="wf-radio selected">MTN MoMo</div>
+                  <div class="wf-radio">Airtel Money</div>
+                </div>
+              </div>
+              <div class="wf-field" style="position:relative;">
+                <span class="wf-ann-dot" style="top:-8px;right:-8px;">4</span>
+                <label>PHONE NUMBER</label>
+                <div class="wf-input">0771 234 567</div>
+              </div>
+              <div style="font-size:10px;color:var(--label);line-height:1.5;padding:4px 0;">
+                A prompt will be sent to your phone. Enter your MoMo PIN to confirm.
+              </div>
+              <div class="wf-btn primary" style="justify-content:center;height:34px;font-size:12px;border-radius:4px;">Confirm &amp; Pay</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ann-list">
+      <div class="ann-item"><div class="ann-num">1</div><div>Product image gallery — large main photo + 3 thumbnails. Photos uploaded to Cloudinary, served as secure URLs.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div>Product metadata: category breadcrumb, condition badge, size, description, vendor rating. All pulled from Prisma/PostgreSQL.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div>MoMo Payment Modal — triggered by "Buy Now" button. Currently mocked with 2.2 s processing delay. Flutterwave API integration planned.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div>Phone field pre-filled from buyer's profile. MTN/Airtel toggle sets which network to use. On success, order status is set to PAID and vendor receives email notification.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 3: Vendor Dashboard
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-2">
+  <div class="screen-wrap">
+    <div class="screen-label">
+      <h2>Vendor Dashboard</h2>
+      <span class="dim-tag">1366 × 768</span>
+      <span class="role-tag">Vendor</span>
+    </div>
+
+    <div class="wf-canvas">
+      <!-- Top bar -->
+      <div class="wf-nav" style="position:relative;">
+        <span class="wf-ann-dot" style="top:-8px;left:8px;">1</span>
+        <div class="wf-logo">Modern Kikubo</div>
+        <div class="wf-spacer"></div>
+        <div class="wf-btn">Kampala Thrift ▾</div>
+      </div>
+
+      <div class="row" style="min-height:400px;">
+        <!-- Sidebar -->
+        <div class="wf-sidebar" style="position:relative;">
+          <span class="wf-ann-dot" style="top:4px;right:-8px;">2</span>
+          <div class="logo">Vendor Panel</div>
+          <div class="wf-nav-item active">
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 3a5 5 0 1 0 0 10A5 5 0 0 0 8 3zm-3 5a3 3 0 1 1 6 0 3 3 0 0 1-6 0z"/></svg>
+            Dashboard
+          </div>
+          <div class="wf-nav-item">My Listings</div>
+          <div class="wf-nav-item">
+            Orders
+            <span class="wf-badge">3</span>
+          </div>
+          <div class="wf-nav-item" style="margin-top:auto;color:var(--accent);font-weight:600;">Subscribe</div>
+        </div>
+
+        <!-- Main content -->
+        <div class="wf-main">
+          <div class="wf-welcome">Good morning, Kampala Thrift 👋</div>
+          <div class="wf-content">
+            <!-- Subscription alert -->
+            <div style="background:var(--ann-bg);border:1.5px solid var(--annotation);border-radius:var(--radius);padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--annotation);display:flex;justify-content:space-between;align-items:center;position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;left:-8px;">3</span>
+              Subscription expires in 3 days. Renew to keep your shop visible.
+              <div class="wf-btn" style="border-color:var(--annotation);color:var(--annotation);font-size:11px;">Renew Now</div>
+            </div>
+
+            <!-- Stats -->
+            <div class="wf-stats" style="position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;left:-8px;">4</span>
+              <div class="wf-stat"><div class="s-label">ACTIVE LISTINGS</div><div class="s-val">24</div></div>
+              <div class="wf-stat"><div class="s-label">PENDING ORDERS</div><div class="s-val" style="color:var(--annotation);">3</div></div>
+              <div class="wf-stat"><div class="s-label">TOTAL ORDERS</div><div class="s-val">87</div></div>
+              <div class="wf-stat"><div class="s-label">REVENUE (UGX)</div><div class="s-val">1.2M</div></div>
+            </div>
+
+            <!-- My Listings -->
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;justify-content:space-between;">
+              Recent Listings
+              <div class="wf-btn primary" style="font-size:11px;height:26px;">+ Add Listing</div>
+            </div>
+            <div style="border:1.5px solid var(--border-2);border-radius:var(--radius);overflow:hidden;position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;left:-8px;">5</span>
+              <table class="wf-table">
+                <thead>
+                  <tr><th>Photo</th><th>Name</th><th>Price</th><th>Category</th><th>Status</th><th>Actions</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><div class="wf-img" style="width:32px;height:32px;border-radius:4px;"></div></td>
+                    <td>Ankara Wrap Dress</td>
+                    <td style="font-variant-numeric:tabular-nums;">UGX 32,000</td>
+                    <td>WOMEN</td>
+                    <td><span class="wf-pill pill-green">Active</span></td>
+                    <td><span style="color:var(--accent);cursor:pointer;">Edit</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="wf-img" style="width:32px;height:32px;border-radius:4px;"></div></td>
+                    <td>Men's Slim Chinos</td>
+                    <td style="font-variant-numeric:tabular-nums;">UGX 18,000</td>
+                    <td>MEN</td>
+                    <td><span class="wf-pill pill-green">Active</span></td>
+                    <td><span style="color:var(--accent);cursor:pointer;">Edit</span></td>
+                  </tr>
+                  <tr>
+                    <td><div class="wf-img" style="width:32px;height:32px;border-radius:4px;"></div></td>
+                    <td>Kids Hoodie Set</td>
+                    <td style="font-variant-numeric:tabular-nums;">UGX 15,000</td>
+                    <td>KIDS</td>
+                    <td><span class="wf-pill pill-grey">Inactive</span></td>
+                    <td><span style="color:var(--accent);cursor:pointer;">Edit</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ann-list">
+      <div class="ann-item"><div class="ann-num">1</div><div>Top bar shows vendor's shop name. User profile dropdown for settings and logout.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div>Role-based sidebar — only Vendor nav items shown. Orders badge shows count of PENDING orders fetched live from API.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div>Subscription alert shown when <code>vendor.isActive = false</code> or expiry approaching. Links to Subscribe modal with plan selection (Monthly / Quarterly / Yearly).</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div>Stat tiles: live counts from <code>GET /api/vendors/me</code>. Revenue shown in UGX with abbreviation for readability.</div></div>
+      <div class="ann-item"><div class="ann-num">5</div><div>Listings table: thumbnail from Cloudinary, name, price, category, status pill. Edit action opens inline edit form.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 4: Admin Dashboard
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-3">
+  <div class="screen-wrap">
+    <div class="screen-label">
+      <h2>Admin Dashboard</h2>
+      <span class="dim-tag">1366 × 768</span>
+      <span class="role-tag">Admin</span>
+    </div>
+
+    <div class="wf-canvas">
+      <!-- Top bar -->
+      <div class="wf-nav">
+        <div class="wf-logo">Modern Kikubo</div>
+        <div class="wf-spacer"></div>
+        <span class="wf-pill pill-red" style="font-size:11px;">ADMIN</span>
+        <div class="wf-btn" style="margin-left:8px;">Rebecca N.</div>
+      </div>
+
+      <div class="row" style="min-height:420px;">
+        <!-- Sidebar -->
+        <div class="wf-sidebar" style="position:relative;">
+          <span class="wf-ann-dot" style="top:4px;right:-8px;">1</span>
+          <div class="logo">Admin Panel</div>
+          <div class="wf-nav-item active">Dashboard</div>
+          <div class="wf-nav-item">Vendors</div>
+          <div class="wf-nav-item">
+            Orders
+            <span class="wf-badge">5</span>
+          </div>
+          <div class="wf-nav-item">Riders</div>
+        </div>
+
+        <!-- Main content -->
+        <div class="wf-main">
+          <div class="wf-welcome">Good morning, Rebecca 👋 — Admin Overview</div>
+          <div class="wf-content">
+
+            <!-- Stats -->
+            <div class="wf-stats" style="position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;left:-8px;">2</span>
+              <div class="wf-stat"><div class="s-label">TOTAL VENDORS</div><div class="s-val">18</div></div>
+              <div class="wf-stat"><div class="s-label">ACTIVE SUBS</div><div class="s-val">14</div></div>
+              <div class="wf-stat"><div class="s-label">TOTAL ORDERS</div><div class="s-val">342</div></div>
+              <div class="wf-stat"><div class="s-label">BODA RIDERS</div><div class="s-val">7</div></div>
+            </div>
+
+            <!-- Bar Chart -->
+            <div class="wf-chart" style="position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;right:-8px;">3</span>
+              <div class="wf-chart-title">ORDERS BY STATUS</div>
+              <div class="bar-chart">
+                <div class="bar-col">
+                  <div class="bar-bar" style="height:30px;background:#ffc107;"></div>
+                  <div class="bar-lbl">PENDING<br>42</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-bar" style="height:60px;background:#28a745;"></div>
+                  <div class="bar-lbl">PAID<br>86</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-bar" style="height:50px;background:#17a2b8;"></div>
+                  <div class="bar-lbl">PREPARING<br>71</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-bar" style="height:40px;background:#6f42c1;"></div>
+                  <div class="bar-lbl">PICKED UP<br>58</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-bar" style="height:70px;background:#2d6a4f;"></div>
+                  <div class="bar-lbl">DELIVERED<br>75</div>
+                </div>
+                <div class="bar-col">
+                  <div class="bar-bar" style="height:10px;background:#dc3545;"></div>
+                  <div class="bar-lbl">CANCELLED<br>10</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Subscriptions Table -->
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">
+              Recent Subscriptions
+            </div>
+            <div style="border:1.5px solid var(--border-2);border-radius:var(--radius);overflow:hidden;position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;right:-8px;">4</span>
+              <table class="wf-table">
+                <thead>
+                  <tr><th>Vendor</th><th>Plan</th><th>Paid (UGX)</th><th>Expires</th><th>Status</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Kampala Thrift</td>
+                    <td>QUARTERLY</td>
+                    <td style="font-variant-numeric:tabular-nums;">120,000</td>
+                    <td>2027-02-05</td>
+                    <td><span class="wf-pill pill-green">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>Owino Styles</td>
+                    <td>MONTHLY</td>
+                    <td style="font-variant-numeric:tabular-nums;">50,000</td>
+                    <td>2026-12-10</td>
+                    <td><span class="wf-pill pill-green">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>Beba Boutique</td>
+                    <td>YEARLY</td>
+                    <td style="font-variant-numeric:tabular-nums;">400,000</td>
+                    <td>2027-11-01</td>
+                    <td><span class="wf-pill pill-green">Active</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ann-list">
+      <div class="ann-item"><div class="ann-num">1</div><div>Admin sidebar — 4 sections. Active tab driven by <code>?tab=</code> URL query param (useSearchParams in React). No page reload on navigation.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div>Platform-wide stat tiles loaded from <code>GET /api/admin/stats</code>. Counts all vendors, active subscriptions, orders, and registered boda riders.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div>Orders by status bar chart — hand-drawn SVG, 6 bars with semantic color per status. Heights are proportional to real order counts.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div>Subscription list from <code>GET /api/admin/subscriptions</code> — shows vendor name, plan, amount paid, expiry date, and active status.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCREEN 5: Buyer — Browse & Order History
+════════════════════════════════════════════════════════════════ -->
+<div class="screen" id="screen-4">
+  <div class="screen-wrap">
+    <div class="screen-label">
+      <h2>Buyer — Browse &amp; Orders</h2>
+      <span class="dim-tag">1366 × 768</span>
+      <span class="role-tag">Buyer</span>
+    </div>
+
+    <div class="wf-canvas">
+      <!-- Top bar -->
+      <div class="wf-nav">
+        <div class="wf-logo">Modern Kikubo</div>
+        <div class="wf-spacer"></div>
+        <div class="wf-search-bar" style="max-width:220px;">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.44 1.406a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+          Search…
+        </div>
+        <div class="wf-spacer"></div>
+        <div class="wf-btn">Kelvin M.</div>
+      </div>
+
+      <div class="row" style="min-height:400px;">
+        <!-- Sidebar -->
+        <div class="wf-sidebar" style="position:relative;">
+          <span class="wf-ann-dot" style="top:4px;right:-8px;">1</span>
+          <div class="logo">My Account</div>
+          <div class="wf-nav-item active">Browse</div>
+          <div class="wf-nav-item">My Orders</div>
+          <div style="margin-top:4px;border-top:1px solid var(--border-2);padding-top:8px;">
+            <div class="wf-nav-item" style="font-size:11px;color:var(--label);">WOMEN</div>
+            <div class="wf-nav-item" style="font-size:11px;color:var(--label);">MEN</div>
+            <div class="wf-nav-item" style="font-size:11px;color:var(--label);">KIDS</div>
+            <div class="wf-nav-item" style="font-size:11px;color:var(--label);">SHOES</div>
+            <div class="wf-nav-item" style="font-size:11px;color:var(--label);">BAGS</div>
+          </div>
+        </div>
+
+        <!-- Main: Browse + Orders -->
+        <div class="wf-main">
+          <div class="wf-welcome">Good afternoon, Kelvin 👋</div>
+          <div class="wf-content">
+            <!-- Category filter chips -->
+            <div style="position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;right:-8px;">2</span>
+              <div class="cat-chips">
+                <div class="cat-chip active">All</div>
+                <div class="cat-chip">WOMEN</div>
+                <div class="cat-chip">MEN</div>
+                <div class="cat-chip">KIDS</div>
+                <div class="cat-chip">SHOES</div>
+                <div class="cat-chip">BAGS</div>
+              </div>
+            </div>
+
+            <!-- Product grid -->
+            <div class="wf-products" style="margin-bottom:20px;position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;left:-8px;">3</span>
+              <div class="wf-product-card">
+                <div class="wf-img" style="height:70px;"><span>Photo</span></div>
+                <div class="card-info">
+                  <div class="card-name">Floral Summer Dress</div>
+                  <div class="card-price">UGX 25,000</div>
+                </div>
+              </div>
+              <div class="wf-product-card">
+                <div class="wf-img" style="height:70px;"><span>Photo</span></div>
+                <div class="card-info">
+                  <div class="card-name">Men's Slim Chinos</div>
+                  <div class="card-price">UGX 18,000</div>
+                </div>
+              </div>
+              <div class="wf-product-card">
+                <div class="wf-img" style="height:70px;"><span>Photo</span></div>
+                <div class="card-info">
+                  <div class="card-name">Leather Sneakers</div>
+                  <div class="card-price">UGX 35,000</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Order History -->
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">My Orders</div>
+            <div style="display:flex;flex-direction:column;gap:8px;position:relative;">
+              <span class="wf-ann-dot" style="top:-8px;right:-8px;">4</span>
+              <!-- Order card -->
+              <div style="border:1.5px solid var(--border-2);border-radius:var(--radius);padding:10px 12px;display:flex;align-items:center;gap:12px;background:var(--surface);">
+                <div class="wf-img" style="width:40px;height:40px;border-radius:4px;min-width:40px;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:12px;font-weight:600;color:var(--text);">Ankara Wrap Dress – Blue</div>
+                  <div style="font-size:10px;color:var(--label);margin-top:2px;">Kampala Thrift · UGX 32,000</div>
+                </div>
+                <span class="wf-pill pill-blue">PREPARING</span>
+              </div>
+              <div style="border:1.5px solid var(--border-2);border-radius:var(--radius);padding:10px 12px;display:flex;align-items:center;gap:12px;background:var(--surface);">
+                <div class="wf-img" style="width:40px;height:40px;border-radius:4px;min-width:40px;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:12px;font-weight:600;color:var(--text);">Kids Hoodie Set</div>
+                  <div style="font-size:10px;color:var(--label);margin-top:2px;">Beba Boutique · UGX 15,000</div>
+                </div>
+                <span class="wf-pill pill-green">DELIVERED</span>
+              </div>
+              <div style="border:1.5px solid var(--border-2);border-radius:var(--radius);padding:10px 12px;display:flex;align-items:center;gap:12px;background:var(--surface);">
+                <div class="wf-img" style="width:40px;height:40px;border-radius:4px;min-width:40px;"></div>
+                <div style="flex:1;min-width:0;">
+                  <div style="font-size:12px;font-weight:600;color:var(--text);">Men's Slim Chinos</div>
+                  <div style="font-size:10px;color:var(--label);margin-top:2px;">Owino Styles · UGX 18,000</div>
+                </div>
+                <span class="wf-pill pill-yellow">PAID</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ann-list">
+      <div class="ann-item"><div class="ann-num">1</div><div>Buyer sidebar — Browse, My Orders, plus category shortcuts. Categories link to <code>/category/[name]</code>.</div></div>
+      <div class="ann-item"><div class="ann-num">2</div><div>Category filter chips — clicking any chip filters the product grid. URL updates with <code>?category=</code> so filtered view is shareable.</div></div>
+      <div class="ann-item"><div class="ann-num">3</div><div>Product grid from <code>GET /api/products</code>. Cards are clickable and route to Product Detail page.</div></div>
+      <div class="ann-item"><div class="ann-num">4</div><div>Order history from <code>GET /api/orders/my</code>. Status pill uses semantic color: yellow = PAID, blue = PREPARING, green = DELIVERED. Email is sent to buyer on PICKED_UP and DELIVERED events.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Bottom spacer ───────────────────────────────────────────── -->
+<div style="height:40px;"></div>
+
+<script>
+  function showScreen(idx) {
+    document.querySelectorAll('.screen').forEach((s, i) => {
+      s.classList.toggle('active', i === idx);
+    });
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', i === idx);
+    });
+    // Restore hash routing
+    const names = ['home','product-detail','vendor','admin','buyer'];
+    location.hash = names[idx] || '';
+  }
+
+  // Boot from hash
+  const hashMap = { home: 0, 'product-detail': 1, vendor: 2, admin: 3, buyer: 4 };
+  const h = location.hash.replace('#', '');
+  if (h in hashMap) showScreen(hashMap[h]);
+</script>

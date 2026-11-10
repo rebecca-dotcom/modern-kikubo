@@ -6,6 +6,24 @@ Modern Kikubo connects buyers, vendors, and boda riders in a single platform. Ve
 
 ---
 
+## Wireframes
+
+Interactive low-fidelity wireframes covering all five key screens:
+
+| Screen | Description |
+|---|---|
+| **Home Page** | Hero, category grid, featured product cards, navbar search |
+| **Product Detail** | Photo gallery, product metadata, MoMo payment modal |
+| **Vendor Dashboard** | Stats tiles, listings table, subscription alert |
+| **Admin Dashboard** | Orders bar chart, subscriptions list, platform stats |
+| **Buyer Orders** | Category filter, product grid, order history with status pills |
+
+🔗 **[View Wireframes →](https://claude.ai/artifact/ADgrLByueTQU9uPF5p1WtT)**
+
+> Source file: [`docs/wireframes.html`](docs/wireframes.html)
+
+---
+
 ## Features
 
 | Feature | Description |
